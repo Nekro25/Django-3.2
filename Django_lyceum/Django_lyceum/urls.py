@@ -9,10 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('catalog/', item_list),
-    re_path('catalog/(?P<item>[\d]+)', item_detail),
+    re_path('catalog/(^?P<item>[\d]+$)', item_detail),
     path('about/', description),
     path('auth/users/', user_list),
-    re_path('auth/users/(?P<item>[\d]+)', user_detail),
+    re_path('auth/users/(^?P<item>[\d]+$)', user_detail),
     path('auth/signup/', signup),
     path('auth/profile/', profile),
 ]

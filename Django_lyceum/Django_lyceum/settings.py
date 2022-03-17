@@ -1,12 +1,19 @@
 from pathlib import Path
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-j!x&iqtcor4e)2kdmh%lqm&t72z)%y$t14he*t88b6mk34r_yi'
+DEBUG = str(environ.get('DEBUG')) == '1'
 
-DEBUG = True
+SECRET_KEY = environ.get('SECRET_KEY',
+                         'default_secret_key')
 
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS += [environ.get('ALLOWED_HOST')]
 
 INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
