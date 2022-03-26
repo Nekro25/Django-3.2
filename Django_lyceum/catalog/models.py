@@ -1,5 +1,4 @@
 from django.db import models
-from django.core import validators
 
 from Core.models import Publishing, SlugAndPublishingContain
 from .validators import validate_brilliant
