@@ -5,5 +5,3 @@ urlpatterns = [
     path('', item_list),
     re_path(r'^(?P<item>[\d]+)/$', item_detail),
 ]
-
-
