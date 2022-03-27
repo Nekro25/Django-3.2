@@ -9,7 +9,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_editable = ('is_published',)
     list_display_links = ('name',)
 
-    filter_horizontal = ('tags', )
+    filter_horizontal = ('tags',)
 
 
 admin.site.register(Category)

@@ -1,4 +1,5 @@
 from django.urls import path, re_path
+
 from .views import item_list, item_detail
 
 urlpatterns = [
