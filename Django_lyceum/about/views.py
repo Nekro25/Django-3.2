@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def description(request):
-    return HttpResponse('Описание')
+    template = 'about/description.html'
+    return render(request, template)
