@@ -5,6 +5,8 @@ from .validators import validate_brilliant
 
 
 class Category(SlugAndPublishingContain):
+    name = models.CharField('Название', max_length=150,
+                            help_text='max 150 символов')
     weight = models.PositiveSmallIntegerField('Вес', default=100,
                                               help_text='max 32767 ,min 1')
 
@@ -17,12 +19,15 @@ class Category(SlugAndPublishingContain):
 
 
 class Tag(SlugAndPublishingContain):
+    name = models.CharField('Название', max_length=150,
+                            help_text='max 150 символов')
+
     class Meta:
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
     def __str__(self):
-        return str(self.slug)
+        return str(self.name)
 
 
 class Item(Publishing):

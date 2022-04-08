@@ -1,0 +1,13 @@
+{% for item in items %}
+  <div>
+    <h5>{{ item.name }}</h5>
+    <p>{{ item.text }}</p>
+    <p>
+      {% for tag in item.tags %}
+        {{ tag.name }}
+      {% endfor %}
+    </p>
+  </div>
+{% empty %}
+  <p>Список пуст, Эй, админ добавь инфы</p>
+{% endfor %}
