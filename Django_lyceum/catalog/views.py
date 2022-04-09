@@ -1,25 +1,24 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Item
+from constants import CATALOG_LIST_TEMPLATE, CATALOG_DETAIL_TEMPLATE
 
 
 def item_list(request):
-    template = 'catalog/list.html'
-    items = Item.objects.all().filter(is_published=True).prefetch_related(
-        'tags')
-
-    # Я так сделал из-за того, что не смог найти аналог split для шаблона
+    template = CATALOG_LIST_TEMPLATE
+    items = Item.objects.item_and_tags_is_published().only('name', 'text')
     context = {
-        'items': [{'name': i.name, 'text': ' '.join(i.text.split()[:10]),
-                   'tags': i.tags.all} for i in items],
+        'items': items,
     }
     return render(request, template, context)
 
 
 def item_detail(request, item):
-    template = 'catalog/detail.html'
+    template = CATALOG_DETAIL_TEMPLATE
+
     product = get_object_or_404(
-        Item.objects.select_related('category').prefetch_related('tags'),
+        Item.objects.item_category_tags_is_published().only('name', 'text',
+                                                            'category__name'),
         pk=item)
     context = {
         'item': product
