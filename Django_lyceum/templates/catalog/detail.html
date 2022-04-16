@@ -14,4 +14,18 @@
         {{ tag.name }}
       {% endfor %}
   </p>
+  <p>{{ avg_rating }} звезд / оценок {{ rating|length }}</p>
+  {% if user.is_authenticated %}
+    {% if user_rate == None %}
+      <form method="post">
+        {% csrf_token %}
+        <ul>
+          {{ form.as_ul }}
+        </ul>
+        <input type="submit" value="Обновить">
+      </form>
+    {% else %}
+      <p>ваша оценка товара: {{ user_rate.star }}</p>
+    {% endif %}
+  {% endif %}
 {% endblock %}
