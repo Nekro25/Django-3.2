@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404, redirect
 
 from catalog.models import Item
@@ -41,23 +43,18 @@ def item_detail(request, item):
         'item').select_related('user').only('star', 'item__id', 'user')
     user = get_user(request)
     avg = 'Нет данных'
-    rate = None
     if rating:
-        avg = round(sum(i.star for i in rating) / len(rating), 1)
+        avg = rating.all().aggregate(Avg('star'))['star__avg']
+    try:
         rate = rating.get(user=user.id)
+    except ObjectDoesNotExist:
+        rate = None
 
     if form.is_valid():
-        if rate:
-            rate.star = form.cleaned_data['star']
-            rate.save(update_fields=['star'])
-        else:
-            star = form.cleaned_data['star']
-            Rating.objects.create(
-                star=star,
-                item=product,
-                user=user,
-            )
-        return redirect(f'http://127.0.0.1:8000/catalog/{item}/')
+        Rating.objects.update_or_create(
+            star=form.cleaned_data['star'],
+            defaults={'item': product, 'user': user})
+        return redirect(f'/catalog/{item}/')
     context = {
         'item': product,
         'rating': rating,
