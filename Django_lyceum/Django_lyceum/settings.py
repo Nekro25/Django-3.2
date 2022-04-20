@@ -16,6 +16,9 @@ ALLOWED_HOSTS = []
 if not DEBUG:
     ALLOWED_HOSTS += [environ.get('ALLOWED_HOST')]
 
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
 INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'catalog.apps.CatalogConfig',
@@ -102,3 +105,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/auth/profile/'

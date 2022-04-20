@@ -5,5 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Информация о пользователе</h1>
+  <h1>Информация о пользователе {{user.user.username}}</h1>
+  <h4>Почта: {{ user.user.email }}</h4>
+  <h4>Имя: {{ user.user.first_name }}</h4>
+  <h4>Фамилия: {{ user.user.last_name }}</h4>
+  <h4>День рождения: {{ user.birthday }}</h4>
+  <h3>Любимые товары:</h3>
+  {% for item in items %}
+    <h4> {{ item.item.name }} </h4>
+  {% endfor %}
 {% endblock %}

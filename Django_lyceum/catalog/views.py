@@ -52,8 +52,9 @@ def item_detail(request, item):
 
     if form.is_valid():
         Rating.objects.update_or_create(
-            star=form.cleaned_data['star'],
-            defaults={'item': product, 'user': user})
+            item=product,
+            user=user,
+            defaults={'star': form.cleaned_data['star']})
         return redirect(f'/catalog/{item}/')
     context = {
         'item': product,

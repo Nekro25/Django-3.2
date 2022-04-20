@@ -6,4 +6,18 @@
 
 {% block content %}
   <h1>Мой профиль</h1>
+  <h3>Любимые товары:</h3>
+  {% for item in items %}
+    <h4> {{ item.item.name }} </h4>
+  {% endfor %}
+  <h3>Изменить данные:</h3>
+  <form method="post" action="">
+
+    {% csrf_token %}
+
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+
+    <button type="submit">Подтвердить</button>
+</form>
 {% endblock %}

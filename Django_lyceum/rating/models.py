@@ -15,7 +15,7 @@ class Rating(models.Model):
         (5, 'Любовь')
     ]
     star = models.IntegerField('Оценка', default=0, choices=RATING_CHOICES,
-                               null=True)
+                               null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              verbose_name='Пользователь')
     item = models.ForeignKey(Item, on_delete=models.CASCADE,
